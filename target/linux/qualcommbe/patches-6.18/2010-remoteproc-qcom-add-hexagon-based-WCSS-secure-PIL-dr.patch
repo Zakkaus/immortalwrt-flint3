@@ -29,8 +29,6 @@ Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
   ImmortalWrt carries for every target: this patch now turns that driver
   into the v14 one above, which the qualcommbe 2010a-2010c patches need. ]
 ---
-diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-index eaa427e4e..84931c1c8 100644
 --- a/drivers/remoteproc/Kconfig
 +++ b/drivers/remoteproc/Kconfig
 @@ -260,6 +260,7 @@ config QCOM_Q6V5_WCSS_SEC
@@ -41,8 +39,6 @@ index eaa427e4e..84931c1c8 100644
  	select QCOM_MDT_LOADER
  	select QCOM_PIL_INFO
  	select QCOM_Q6V5_COMMON
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss_sec.c b/drivers/remoteproc/qcom_q6v5_wcss_sec.c
-index 27e60cd0b..b0ea29444 100644
 --- a/drivers/remoteproc/qcom_q6v5_wcss_sec.c
 +++ b/drivers/remoteproc/qcom_q6v5_wcss_sec.c
 @@ -1,15 +1,11 @@
@@ -91,7 +87,7 @@ index 27e60cd0b..b0ea29444 100644
  };
  
  static int wcss_sec_start(struct rproc *rproc)
-@@ -62,32 +49,21 @@ static int wcss_sec_start(struct rproc *rproc)
+@@ -62,32 +49,21 @@ static int wcss_sec_start(struct rproc *
  	if (ret)
  		return ret;
  
@@ -135,7 +131,7 @@ index 27e60cd0b..b0ea29444 100644
  
  unprepare:
  	qcom_q6v5_unprepare(&wcss->q6);
-@@ -101,26 +77,17 @@ static int wcss_sec_stop(struct rproc *rproc)
+@@ -101,26 +77,17 @@ static int wcss_sec_stop(struct rproc *r
  	struct device *dev = wcss->dev;
  	int ret;
  
@@ -169,7 +165,7 @@ index 27e60cd0b..b0ea29444 100644
  }
  
  static void *wcss_sec_da_to_va(struct rproc *rproc, u64 da, size_t len,
-@@ -133,6 +100,9 @@ static void *wcss_sec_da_to_va(struct rproc *rproc, u64 da, size_t len,
+@@ -133,6 +100,9 @@ static void *wcss_sec_da_to_va(struct rp
  	if (offset < 0 || offset + len > wcss->mem_size)
  		return NULL;
  
@@ -179,7 +175,7 @@ index 27e60cd0b..b0ea29444 100644
  	return wcss->mem_region + offset;
  }
  
-@@ -140,54 +110,12 @@ static int wcss_sec_load(struct rproc *rproc, const struct firmware *fw)
+@@ -140,54 +110,12 @@ static int wcss_sec_load(struct rproc *r
  {
  	struct wcss_sec *wcss = rproc->priv;
  	struct device *dev = wcss->dev;
@@ -208,7 +204,8 @@ index 27e60cd0b..b0ea29444 100644
 -				    wcss->mem_phys, wcss->mem_size, &wcss->mem_reloc);
 -		if (ret)
 -			return ret;
--
++	int ret;
+ 
 -		for (i = 1; i < MAX_FIRMWARE; i++) {
 -			if (!wcss->firmware[i])
 -				continue;
@@ -223,8 +220,7 @@ index 27e60cd0b..b0ea29444 100644
 -						    wcss->mem_size, &wcss->mem_reloc);
 -
 -			release_firmware(fw_hdl);
-+	int ret;
- 
+-
 -			if (ret) {
 -				dev_err(dev, "error %d loading firmware %s\n",
 -					ret, wcss->firmware[i]);
@@ -239,7 +235,7 @@ index 27e60cd0b..b0ea29444 100644
  
  	qcom_pil_info_store("wcss", wcss->mem_phys, wcss->mem_size);
  
-@@ -217,8 +145,8 @@ static void wcss_sec_copy_segment(struct rproc *rproc,
+@@ -217,8 +145,8 @@ static void wcss_sec_copy_segment(struct
  		return;
  	}
  
@@ -250,7 +246,7 @@ index 27e60cd0b..b0ea29444 100644
  	} else {
  		iounmap(segment->io_ptr);
  		segment->io_ptr = NULL;
-@@ -280,32 +208,23 @@ static const struct rproc_ops wcss_sec_ops = {
+@@ -280,32 +208,23 @@ static const struct rproc_ops wcss_sec_o
  
  static int wcss_sec_alloc_memory_region(struct wcss_sec *wcss)
  {
@@ -296,7 +292,7 @@ index 27e60cd0b..b0ea29444 100644
  	}
  
  	return 0;
-@@ -313,24 +232,21 @@ static int wcss_sec_alloc_memory_region(struct wcss_sec *wcss)
+@@ -313,24 +232,21 @@ static int wcss_sec_alloc_memory_region(
  
  static int wcss_sec_probe(struct platform_device *pdev)
  {
@@ -327,7 +323,7 @@ index 27e60cd0b..b0ea29444 100644
  	if (!rproc) {
  		dev_err(&pdev->dev, "failed to allocate rproc\n");
  		return -ENOMEM;
-@@ -339,7 +255,6 @@ static int wcss_sec_probe(struct platform_device *pdev)
+@@ -339,7 +255,6 @@ static int wcss_sec_probe(struct platfor
  	wcss = rproc->priv;
  	wcss->dev = &pdev->dev;
  	wcss->desc = desc;
@@ -335,7 +331,7 @@ index 27e60cd0b..b0ea29444 100644
  
  	ret = wcss_sec_alloc_memory_region(wcss);
  	if (ret)
-@@ -363,23 +278,17 @@ static int wcss_sec_probe(struct platform_device *pdev)
+@@ -363,23 +278,17 @@ static int wcss_sec_probe(struct platfor
  	qcom_add_glink_subdev(rproc, &wcss->glink_subdev, desc->ss_name);
  	qcom_add_ssr_subdev(rproc, &wcss->ssr_subdev, desc->ss_name);
  
@@ -365,7 +361,7 @@ index 27e60cd0b..b0ea29444 100644
  
  	platform_set_drvdata(pdev, rproc);
  
-@@ -391,9 +300,8 @@ static void wcss_sec_remove(struct platform_device *pdev)
+@@ -391,9 +300,8 @@ static void wcss_sec_remove(struct platf
  	struct rproc *rproc = platform_get_drvdata(pdev);
  	struct wcss_sec *wcss = rproc->priv;
  
@@ -376,7 +372,7 @@ index 27e60cd0b..b0ea29444 100644
  	qcom_q6v5_deinit(&wcss->q6);
  }
  
-@@ -402,12 +310,6 @@ static const struct wcss_data wcss_sec_ipq5332_res_init = {
+@@ -402,12 +310,6 @@ static const struct wcss_data wcss_sec_i
  	.ss_name = "q6wcss",
  };
  
@@ -389,7 +385,7 @@ index 27e60cd0b..b0ea29444 100644
  static const struct wcss_data wcss_sec_ipq9574_res_init = {
  	.pasid = WCSS_PAS_ID,
  	.ss_name = "q6wcss",
-@@ -416,7 +318,6 @@ static const struct wcss_data wcss_sec_ipq9574_res_init = {
+@@ -416,7 +318,6 @@ static const struct wcss_data wcss_sec_i
  static const struct of_device_id wcss_sec_of_match[] = {
  	{ .compatible = "qcom,ipq5018-wcss-sec-pil", .data = &wcss_sec_ipq5332_res_init },
  	{ .compatible = "qcom,ipq5332-wcss-sec-pil", .data = &wcss_sec_ipq5332_res_init },
@@ -397,8 +393,6 @@ index 27e60cd0b..b0ea29444 100644
  	{ .compatible = "qcom,ipq9574-wcss-sec-pil", .data = &wcss_sec_ipq9574_res_init },
  	{ },
  };
-diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-index f0601e834..759ab4917 100644
 --- a/include/linux/remoteproc.h
 +++ b/include/linux/remoteproc.h
 @@ -216,7 +216,7 @@ struct rproc_dump_segment {

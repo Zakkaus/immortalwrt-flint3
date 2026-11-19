@@ -16,7 +16,6 @@ not happen. panic=0 leaves the watchdog untouched.
 
 Signed-off-by: CoolFreeze23 <34906576+CoolFreeze23@users.noreply.github.com>
 ---
-diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
 --- a/drivers/watchdog/qcom-wdt.c
 +++ b/drivers/watchdog/qcom-wdt.c
 @@ -9,6 +9,8 @@
@@ -49,7 +48,7 @@ diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
  };
  
  static void __iomem *wdt_addr(struct qcom_wdt *wdt, enum wdt_reg reg)
-@@ -141,6 +150,46 @@ static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
+@@ -141,6 +150,46 @@ static int qcom_wdt_restart(struct watch
  	return 0;
  }
  
@@ -96,7 +95,7 @@ diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
  static int qcom_wdt_is_running(struct watchdog_device *wdd)
  {
  	struct qcom_wdt *wdt = to_qcom_wdt(wdd);
-@@ -299,6 +348,14 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+@@ -299,6 +348,14 @@ static int qcom_wdt_probe(struct platfor
  	if (ret)
  		return ret;
  

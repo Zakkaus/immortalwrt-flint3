@@ -32,7 +32,7 @@ Signed-off-by: Francois Guerraz <kubrick@fgv6.net>
 ---
 --- a/drivers/net/ethernet/qualcomm/ppe/edma_cfg_rx.c
 +++ b/drivers/net/ethernet/qualcomm/ppe/edma_cfg_rx.c
-@@ -92,7 +92,8 @@ static int edma_cfg_rx_desc_ring_reset_q
+@@ -108,7 +108,8 @@ static int edma_cfg_rx_desc_ring_reset_q
  	struct edma_ring_info *rx = hw_info->rx;
  	u32 i, ret;
  
@@ -42,7 +42,7 @@ Signed-off-by: Francois Guerraz <kubrick@fgv6.net>
  		pr_err("Invalid count of rxdesc rings: %d\n",
  		       rx->num_rings);
  		return -EINVAL;
-@@ -127,13 +128,18 @@ static int edma_cfg_rx_desc_ring_to_queu
+@@ -143,13 +144,18 @@ static int edma_cfg_rx_desc_ring_to_queu
  
  	/* Rxdesc ring to PPE queue mapping */
  	for (i = 0; i < rx->num_rings; i++) {

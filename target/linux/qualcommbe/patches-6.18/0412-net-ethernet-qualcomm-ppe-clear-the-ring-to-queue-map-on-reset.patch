@@ -35,7 +35,7 @@ Signed-off-by: Francois Guerraz <kubrick@fgv6.net>
  static u32 edma_rx_ring_queue_map[][EDMA_MAX_CORE] = {{ 0, 8, 16, 24 },
  						{ 1, 9, 17, 25 },
  						{ 2, 10, 18, 26 },
-@@ -49,7 +47,8 @@ static int edma_cfg_rx_desc_rings_reset_
+@@ -65,7 +63,8 @@ static int edma_cfg_rx_desc_rings_reset_
  {
  	struct edma_hw_info *hw_info = edma_ctx->hw_info;
  	struct edma_ring_info *rx = hw_info->rx;
@@ -45,7 +45,7 @@ Signed-off-by: Francois Guerraz <kubrick@fgv6.net>
  
  	for (i = 0; i < rx->num_rings; i++) {
  		struct edma_rxdesc_ring *rxdesc_ring;
-@@ -57,7 +56,7 @@ static int edma_cfg_rx_desc_rings_reset_
+@@ -73,7 +72,7 @@ static int edma_cfg_rx_desc_rings_reset_
  		rxdesc_ring = &edma_ctx->rx_rings[i];
  
  		ret = ppe_edma_ring_to_queues_config(edma_ctx->ppe_dev, rxdesc_ring->ring_id,
@@ -54,7 +54,7 @@ Signed-off-by: Francois Guerraz <kubrick@fgv6.net>
  		if (ret) {
  			pr_err("Error in unmapping rxdesc ring %d to PPE queue mapping to disable its backpressure configuration\n",
  			       i);
-@@ -143,7 +142,7 @@ static int edma_cfg_rx_desc_ring_to_queu
+@@ -159,7 +158,7 @@ static int edma_cfg_rx_desc_ring_to_queu
  		if (ret) {
  			pr_err("Error in configuring Rx ring to PPE queue mapping, ret: %d, id: %d\n",
  			       ret, rxdesc_ring->ring_id);

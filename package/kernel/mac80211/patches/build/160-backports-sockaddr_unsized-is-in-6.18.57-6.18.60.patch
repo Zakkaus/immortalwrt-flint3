@@ -1,23 +1,25 @@
 Linux 6.18.57 backported struct sockaddr_unsized to include/linux/socket.h,
-so only define it for older kernels.
+and 6.18.61 reverted that backport again. Define it for every kernel
+before 6.19 except 6.18.57 to 6.18.60.
 
 --- a/backport-include/linux/socket.h
 +++ b/backport-include/linux/socket.h
-@@ -11,7 +11,7 @@
+@@ -11,7 +11,8 @@
  #define SOL_NFC		280
  #endif
  
 -#if LINUX_VERSION_IS_LESS(6,19,0)
-+#if LINUX_VERSION_IS_LESS(6,18,57)
++#if LINUX_VERSION_IS_LESS(6,18,57) || \
++    (LINUX_VERSION_IS_GEQ(6,18,61) && LINUX_VERSION_IS_LESS(6,19,0))
  /**
   * struct sockaddr_unsized - Unspecified size sockaddr for callbacks
   * @sa_family: Address family (AF_UNIX, AF_INET, AF_INET6, etc.)
-@@ -28,7 +28,7 @@ struct sockaddr_unsized {
+@@ -28,7 +29,7 @@ struct sockaddr_unsized {
  	__kernel_sa_family_t	sa_family;	/* address family, AF_xxx */
  	char			sa_data[];	/* flexible address data */
  };
 -#endif /* < 6.19 */
-+#endif /* < 6.18.57 */
++#endif /* < 6.18.57 || (>= 6.18.61 && < 6.19) */
  
  #ifndef __sockaddr_check_size
  #define __sockaddr_check_size(size)	\

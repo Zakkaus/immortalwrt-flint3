@@ -82,7 +82,7 @@ make -j"$(nproc)"
 
 ### 不想從原始碼建置？
 
-**[Releases 頁面](https://github.com/Zakkaus/immortalwrt-flint3/releases)** 上的每一個發行版都是一次路由器建置，由本 fork 的 `configs/router.config` 建出，包含 LuCI，附 factory 與 sysupgrade 映像檔及 `sha256sums` 檔案。最新的是 `flint3-20261120`，於 2026-11-20 在 GL-BE9300 上開機；其映像檔名稱以 `immortalwrt-` 開頭。
+**[Releases 頁面](https://github.com/Zakkaus/immortalwrt-flint3/releases)** 上的每一個發行版都是一次路由器建置，由本 fork 的 `configs/router.config` 建出，包含 LuCI，附 factory 與 sysupgrade 映像檔及 `sha256sums` 檔案。最新的是 `flint3-20261121`，只建置、未開機測試；它的核心與 2026-11-20 在 GL-BE9300 上開機的 `flint3-20261120` 相同。映像檔名稱以 `immortalwrt-` 開頭。
 
 已簽章的 apk 套件 feed 含核心模組，與發行映像檔相符：
 

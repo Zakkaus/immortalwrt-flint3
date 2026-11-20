@@ -124,7 +124,8 @@ Images are named `immortalwrt-*`.
 Each release on the **[Releases page](https://github.com/Zakkaus/immortalwrt-flint3/releases)**
 is one router build, made from `configs/router.config` in this fork with LuCI included. It ships
 the factory and sysupgrade images and a `sha256sums` file. The latest is
-`flint3-20261120`, booted on a GL-BE9300 on 2026-11-20; its images are named `immortalwrt-*`.
+`flint3-20261121`, built but not booted; its kernel is the one of `flint3-20261120`, which booted
+on a GL-BE9300 on 2026-11-20. The images are named `immortalwrt-*`.
 
 Signed apk package feeds, kernel modules included, match the release image:
 **https://zakkaus.github.io/flint3-packages/immortalwrt/** for this fork and
